@@ -4,14 +4,29 @@ export interface Post {
 		slug: string;
 		featuredPost: boolean;
 		author: Author;
-		id:string
-		categories: [Categories];
+		id: string;
+
+		categories: [Categorie];
 		createdAt: Date;
 		excerpt: string;
 		featuredPhoto: {
 			url: string;
 		};
-	}
+	};
+}
+export interface PostDetail {
+	title: string;
+	slug: string;
+	featuredPost: boolean;
+	author: Author;
+	id: string;
+	content: { raw: { children: any } };
+	categories: [Categorie];
+	createdAt: Date;
+	excerpt: string;
+	featuredPhoto: {
+		url: string;
+	};
 }
 
 interface Author {
@@ -22,7 +37,17 @@ interface Author {
 		url: string;
 	};
 }
-interface Categories {
+interface Categorie {
 	name: string;
+	slug: string;
+}
+
+export interface RelatedPost {
+	id: string;
+	title: string;
+	featuredPhoto: {
+		url: string;
+	};
+	createdAt: Date;
 	slug: string;
 }

@@ -1,19 +1,18 @@
 import Head from 'next/head';
 import { Categories, PostCard } from '../components';
-import { getPosts } from '../services/PostCard';
-import { Post } from '../typings';
+import RelatedPosts from '../components/RelatedPosts';
+import { getCategories, getPosts, getRecentPosts } from '../services';
+import { Categorie, Post, RelatedPost } from '../typings';
 interface Props {
 	posts: [Post];
 }
-
-const Home = ({posts}:Props) => {
-
+const Home = ({ posts }: Props) => {
 	return (
-		<div className="flex min-h-screen flex-col items-center justify-center py-2">
+		<div  className="flex min-h-screen flex-col items-center justify-center py-2">
 			<Head>
 				<title>DUH-Blog</title>
 			</Head>
-			<main className="container  grid grid-cols-1 lg:grid-cols-12 mx-auto p-5">
+			<main className="container grid grid-cols-1 lg:grid-cols-12 mx-auto p-5">
 				{/* POSTS */}
 				<div className="col-span-1 lg:col-span-8">
 					{posts.map((post) => (
@@ -22,12 +21,13 @@ const Home = ({posts}:Props) => {
 				</div>
 
 				{/* ASIDE */}
-				<aside className="lg:sticky relative col-span-1 lg:col-span-4">
+				<aside className=" col-span-1 lg:col-span-4">
 					{/* CATEGORIES */}
-					<Categories />
-					<Categories />
+					<div className="lg:sticky relative top-8">
+						<RelatedPosts />
+						<Categories />
+					</div>
 					{/* RELATED POSTS */}
-					<div></div>
 				</aside>
 			</main>
 		</div>
@@ -37,8 +37,7 @@ const Home = ({posts}:Props) => {
 export default Home;
 
 export async function getStaticProps() {
-	const posts = (await getPosts()) || []
-
+	const posts = (await getPosts()) || [];
 
 	return {
 		props: {

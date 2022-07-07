@@ -1,18 +1,24 @@
 import Link from 'next/link';
-import React from 'react';
-const categories = [
-	{ slug: 'web-dev', name: 'web-developement' },
-	{ slug: 'web-dev', name: 'science' },
-	{ slug: 'web-dev', name: 'food' },
-	{ slug: 'web-dev', name: 'politics' },
-];
+import React, { useEffect, useState } from 'react';
+import { getCategories } from '../services';
+import { Categorie } from '../typings';
+
 const Categories = () => {
+	const [categories,setCategories] = useState<Categorie[]>([])
+	useEffect(() => {
+		async function getData() {
+			await getCategories().then(result=>setCategories(result))
+			
+		}
+		getData()
+	},[])
+	
 	return (
-		<div className="bg-white shadow-2xl rounded-2xl p-5 mb-10">
+		<div className=" bg-white  shadow-2xl rounded-2xl p-5 mb-10">
 			<h2 className="font-bold pb-5 text-2xl">Categories</h2>
 			<div className="">
 				{categories.map((c) => (
-					<Link href={c.slug}>
+					<Link key={c.slug} href={`categories/${c.slug}`}>
 						<span className="block my-1 border-b py-1 transition duration-200 hover:text-pink-700 cursor-pointer">
 							{c.name}
 						</span>
